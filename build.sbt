@@ -13,7 +13,9 @@ lazy val commonSettings = Seq(
 
 lazy val pyro = project.in(file("pyro")).settings(commonSettings).settings(
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "1.2.0"
+    "com.lihaoyi" %% "sourcecode" % "0.1.5",
+    "org.typelevel" %% "cats-effect" % "1.2.0",
+    "fr.thomasdufour" %% "auto-diff-core" % "0.3.0-RC1",
   )
 ).dependsOn(bananasCore)
 
