@@ -4,11 +4,10 @@ scalaVersion := "2.12.8"
 
 scalafmtConfig in ThisBuild := Some(file("scalafmt.conf"))
 
-addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.8")
-
 lazy val commonSettings = Seq(
   scalacOptions += "-Ypartial-unification",
-  version := "0.6.0"
+  version := "0.6.0",
+  addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.8")
 )
 
 lazy val pyro = project.in(file("pyro")).settings(commonSettings).settings(
@@ -33,4 +32,3 @@ lazy val bananasPlugin = project.in(file("bananas/plugin")).settings(commonSetti
     "com.lihaoyi" %% "fansi" % "0.2.5"
   )
 ).dependsOn(bananasCore)
-
