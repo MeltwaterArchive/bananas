@@ -8,13 +8,7 @@ import cats.effect._
 import fs2._
 import java.lang.Math.max
 
-object Reporters extends IOApp {
-
-  /*
-  def report(rs: List[(Chain[String], Either[Throwable, ValidatedNel[String, Unit]])]) = {
-    Stream.emits(rs).groupAdjacentBy(_.headOption)
-  }
-   */
+object Reporters {
 
   def maxDepth(rs: List[(Chain[String], Either[Throwable, ValidatedNel[String, Unit]])]) =
     Stream
@@ -40,17 +34,5 @@ object Reporters extends IOApp {
         current.copy(
           labels = NonEmptyChain.fromChainUnsafe(Chain.fromSeq(replaced) ++ Chain.fromSeq(current.labels.toList.drop(replaced.length))))
     }
-  }
-
-  override def run(args: List[String]): IO[ExitCode] = IO {
-    val r = report(
-      List(
-        TestResult(NonEmptyChain("a", "bbbbbbbbb", "c"), Right(Valid(1))),
-        TestResult(NonEmptyChain("a", "bbbbbbbbb", "e"), Right(Valid(1)))
-      )).compile.toList
-
-    println(r)
-
-    ExitCode.Success
   }
 }
