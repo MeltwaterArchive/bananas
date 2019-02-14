@@ -13,15 +13,15 @@ object core {
 
   case class Asserts[A](a: A, as: List[Predicate[A]]) {
     def assert(s: String)(f: A => Boolean)(implicit line: Line, enc: Enclosing): Asserts[A] =
-      copy(as = { (a: A) =>
+      copy(as = as :+ { (a: A) =>
         Validated.condNel(f(a), a, s"${enc.value}:${line.value} $s")
-      } :: as)
+      })
     def ::(p: Predicate[A]): Asserts[A] = copy(as = p :: as)
     def assertEqual(other: A)(implicit d: Diff[A], line: Line, enc: Enclosing): core.Asserts[A] = {
       val diff = d(other, a)
-      copy(as = { (a: A) =>
+      copy(as = as :+ { (a: A) =>
         Validated.condNel(diff.isEmpty, a, s"${enc.value}:${line.value} ${Pretty.Colorized2.show(diff.get)}")
-      } :: as)
+      })
     }
     def compile = as.map(_.apply(a).void).combineAll
   }

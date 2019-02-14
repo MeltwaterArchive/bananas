@@ -85,9 +85,9 @@ class BananasRunner extends Runner {
       val error = r.result match {
         case Left(e) => Some(indent(e.getStackTrace.toList.map(_.toString), "  * ", "    ", "\n"))
         case Right(Valid(_)) => None
-        case Right(Invalid(is)) => Some(indent(is.toList, "  * ", "    ", "\n"))
+        case Right(Invalid(is)) => Some(indent(is.toList, "  * ", "  * ", "\n"))
       }
-      s"${colour(labels)}" + error.map("\n" + _).getOrElse("")
+      (labels + error.map("\n" + _).getOrElse("")).split('\n').map(s => colour(s)).mkString("\n")
     }.mkString("\n")
   }
   override def remoteArgs(): Array[String] = Array()
