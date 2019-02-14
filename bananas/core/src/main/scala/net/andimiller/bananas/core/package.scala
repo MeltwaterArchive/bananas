@@ -36,14 +36,13 @@ package object core {
 
   case class PropertyBasedTest[F[_], A, T](labels: NonEmptyChain[String],
                                            gen: Gen[F, A],
-                                           properties: A => F[ValidatedNel[String, T]])
+                                           properties: A => F[Assertions])
     extends Test[F] {
 
     def run(config: Config)(implicit F: Sync[F]): F[Assertions] = {
       gen
         .arbitrary(config.seed)
         .evalMap(properties)
-        .map(_.void)
         .take(config.maxSamples)
         .compile
         .foldMonoid
@@ -75,7 +74,8 @@ package object core {
         fa.map(f)
       }
 
-      override def tailRecM[A, B](a: A)(f: A => Gen[F, Either[A, B]]): Gen[F, B] = ???
+      override def tailRecM[A, B](a: A)(f: A => Gen[F, Either[A, B]]): Gen[F, B] = (seed: Long) =>
+        Monad[Stream[F, ?]].tailRecM[A, B](a)(f.map(_.arbitrary(seed)))
 
       override def pure[A](x: A): Gen[F, A] = Gen.const(x)
     }
@@ -110,12 +110,21 @@ package object core {
             }
           }
 
-    implicit def optionGen[F[_]: Sync, A](implicit gen: Gen[F, A]): Gen[F, Option[A]] = (seed: Long) =>
+    implicit def optionGen[F[_], A](implicit gen: Gen[F, A]): Gen[F, Option[A]] = (seed: Long) =>
       Stream.emit(None) ++ gen.arbitrary(seed).map(_.some)
 
     implicit def listGen[F[_]: Sync, A](implicit gen: Gen[F, A], sizes: Gen[F, Int]): Gen[F, List[A]] = (seed: Long) =>
       Stream.emit(Nil).covaryAll[F ,List[A]] ++ sizes.arbitrary(seed).flatMap { size =>
         Stream.eval(gen.arbitrary(seed).take(size).compile.toList)
       }
+
+    implicit def tuple2Gen[F[_], A, B](implicit ga: Gen[F, A], gb: Gen[F, B]): Gen[F, (A, B)] =
+      (ga, gb).tupled
+    implicit def tuple3Gen[F[_], A, B, C](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C]): Gen[F, (A, B, C)] =
+      (ga, gb, gc).tupled
+    implicit def tuple4Gen[F[_], A, B, C, D](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D]): Gen[F, (A, B, C, D)] =
+      (ga, gb, gc, gd).tupled
+    implicit def tuple5Gen[F[_], A, B, C, D, E](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D], ge: Gen[F, E]): Gen[F, (A, B, C, D, E)] =
+      (ga, gb, gc, gd, ge).tupled
   }
 }

@@ -5,22 +5,37 @@ import fs2._
 
 trait PropertyTests[F[_]] {
   implicit class NestedGrammar(s: NonEmptyChain[String]) {
-    def forAll[A](implicit gen: Gen[F, A]): PartialPropertyGrammarNode[A] = {
-      PartialPropertyGrammarNode[A](s)
+    def forAll[A](implicit ga: Gen[F, A], F: Functor[F]): PartialPropertyGrammarNode[A] = {
+      PartialPropertyGrammarNode(s)
+    }
+
+    def forAll[A, B](implicit ga: Gen[F, A], gb: Gen[F, B],F: Functor[F]): PartialPropertyGrammarNode[(A, B)] = {
+      PartialPropertyGrammarNode(s)
+    }
+
+    def forAll[A, B, C](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], F: Functor[F]): PartialPropertyGrammarNode[(A, B, C)] = {
+      PartialPropertyGrammarNode(s)
+    }
+
+    def forAll[A, B, C, D](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D], F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D)] = {
+      PartialPropertyGrammarNode(s)
+    }
+
+    def forAll[A, B, C, D, E](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D], ge: Gen[F, E], F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D, E)] = {
+      PartialPropertyGrammarNode(s)
     }
   }
 
   case class PartialPropertyGrammarNode[A](ss: NonEmptyChain[String])
-                                          (implicit gen: Gen[F, A]) {
+                                          (implicit gen: Gen[F, A], F: Functor[F]) {
     def whenever(predicate: A => Boolean): PartialPropertyGrammarNode[A] = {
-      PartialPropertyGrammarNode[A](ss)(gen.filter(predicate))
+      PartialPropertyGrammarNode[A](ss)(gen.filter(predicate), F)
     }
 
     def apply[T](f: A => F[ValidatedNel[String, T]]): Test[F] = {
-      PropertyBasedTest[F, A, T](ss, gen, f)
+      PropertyBasedTest[F, A, T](ss, gen, f.map(_.map(_.void)))
     }
   }
-
 }
 
 trait NestedDsl {
