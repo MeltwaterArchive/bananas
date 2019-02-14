@@ -52,6 +52,14 @@ package object core {
   object Gen extends GenInstances {
     def apply[F[_], A](f: Long => Stream[F, A]): Gen[F, A] = (seed: Long) => f(seed)
     def const[A](x: A): Gen[Pure, A] = (_: Long) => Stream.emit(x)
+
+    def oneOf[F[_]: Sync, A](x1: A, x2: A, xs: A*): Gen[F, A] = oneOf(x1 +: x2 +: xs)
+    def oneOf[F[_], A](xs: Seq[A])(implicit F: Sync[F]): Gen[F, A] = (seed: Long) => {
+      Stream.eval(F.delay(new scala.util.Random(seed)))
+        .flatMap { rng =>
+          Stream.emits(rng.shuffle(xs))
+        }
+    }
   }
 
   trait Gen[+F[_], +A] {
