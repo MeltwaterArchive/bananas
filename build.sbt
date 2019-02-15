@@ -7,6 +7,7 @@ scalafmtConfig in ThisBuild := Some(file("scalafmt.conf"))
 lazy val commonSettings = Seq(
   scalacOptions += "-Ypartial-unification",
   version := "0.6.0",
+  organization := "com.meltwater",
   addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.8")
 )
 
@@ -34,3 +35,22 @@ lazy val bananasPlugin = project.in(file("bananas/plugin")).settings(commonSetti
     "com.lihaoyi" %% "fansi" % "0.2.5"
   )
 ).dependsOn(bananasCore)
+
+lazy val docs = project.in(file("docs")).settings(commonSettings).enablePlugins(MicrositesPlugin).settings(
+  micrositeName := "Bananas Test Framework",
+  micrositeDescription := "A purely functional test framework",
+  micrositeUrl := "https://meltwater.github.io",
+  micrositeGithubOwner := "meltwater",
+  micrositeGithubRepo := "bananas",
+  micrositePalette := Map(
+    "brand-primary"   -> "#FFDE25",
+    "brand-secondary" -> "#403709",
+    "brand-tertiary"  -> "#7F6F13",
+    "gray-dark"       -> "#453E46",
+    "gray"            -> "#837F84",
+    "gray-light"      -> "#E3E2E3",
+    "gray-lighter"    -> "#F4F3F4",
+    "white-color"     -> "#FFFFFF"
+  )
+  //micrositeBaseUrl := "/bananas",
+).dependsOn(pyro).dependsOn(bananasCore)

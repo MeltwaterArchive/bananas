@@ -1,0 +1,12 @@
+---
+options:
+  - title: Introduction
+    url: introduction.html
+  - title: Core Types
+    url: types.html
+  - title: Using the Plugin
+    url: plugin.html
+  - title: Asserting with Pyro
+    url: asserting-with-pyro.html
+  - title: Integrating your Integration Testing with Whales
+    url: whales.html
