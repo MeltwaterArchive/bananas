@@ -37,11 +37,12 @@ lazy val bananasPlugin = project.in(file("bananas/plugin")).settings(commonSetti
 ).dependsOn(bananasCore)
 
 lazy val docs = project.in(file("docs")).settings(commonSettings).enablePlugins(MicrositesPlugin).settings(
-  micrositeName := "Bananas Test Framework",
+  micrositeName := "Bananas",
   micrositeDescription := "A purely functional test framework",
   micrositeUrl := "https://meltwater.github.io",
   micrositeGithubOwner := "meltwater",
   micrositeGithubRepo := "bananas",
+  micrositeAuthor := "Meltwater",
   micrositePalette := Map(
     "brand-primary"   -> "#FFDE25",
     "brand-secondary" -> "#403709",
@@ -51,6 +52,8 @@ lazy val docs = project.in(file("docs")).settings(commonSettings).enablePlugins(
     "gray-light"      -> "#E3E2E3",
     "gray-lighter"    -> "#F4F3F4",
     "white-color"     -> "#FFFFFF"
-  )
+  ),
+  micrositeDocumentationUrl := "/introduction.html",
   //micrositeBaseUrl := "/bananas",
+  scalacOptions in Tut += "-Ypartial-unification",
 ).dependsOn(pyro).dependsOn(bananasCore)

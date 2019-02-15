@@ -1,4 +1,4 @@
-package net.andimiller.pyro
+package com.meltwater.pyro
 
 import cats._
 import cats.data._
