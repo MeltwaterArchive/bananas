@@ -1,4 +1,4 @@
-package net.andimiller.bananas.core
+package com.meltwater.bananas.core
 
 import cats._
 import cats.data.Validated.Valid

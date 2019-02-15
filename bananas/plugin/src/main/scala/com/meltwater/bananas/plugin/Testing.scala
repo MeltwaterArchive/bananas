@@ -1,6 +1,6 @@
-package net.andimiller.bananas.plugin
+package com.meltwater.bananas.plugin
 
-import net.andimiller.bananas.core.{Assertions, Config, Reporters, Spec, TestResult}
+import com.meltwater.bananas.core.{Assertions, Config, Reporters, Spec, TestResult}
 import sbt.testing._
 import cats._
 import cats.data.Validated.{Invalid, Valid}
@@ -102,6 +102,6 @@ class BananasRunner extends Runner {
 
 class BananasFingerprint extends SubclassFingerprint {
   override def isModule: Boolean                  = false
-  override def superclassName(): String           = "net.andimiller.bananas.core.Banana"
+  override def superclassName(): String           = "com.meltwater.bananas.core.Banana"
   override def requireNoArgConstructor(): Boolean = true
 }
