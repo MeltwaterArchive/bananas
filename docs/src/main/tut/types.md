@@ -47,7 +47,7 @@ It's defined over an `F[_]` which should be your effect type, and you need to de
 
 Here's a simple example which doesn't use the DSL:
 
-```tut:reset
+```tut:silent
 import com.meltwater.bananas.core._
 import cats._, cats.implicits._, cats.effect._, cats.data._
 import fs2._
@@ -69,7 +69,7 @@ This is a little bit verbose, but should give you an idea of how the types are l
 
 Here's an example with the `NestedDsl`:
 
-```tut:reset
+```tut:silent
 import com.meltwater.bananas.core._
 import cats._, cats.implicits._, cats.effect._, cats.data._
 import fs2._
@@ -86,7 +86,7 @@ class ExampleSpec extends Spec[IO] with NestedDsl {
 
 And an example with the `Pyro` asserts DSL:
 
-```tut:reset
+```tut:silent
 import com.meltwater.bananas.core._
 import com.meltwater.pyro.syntax._
 import cats._, cats.implicits._, cats.effect._, cats.data._
