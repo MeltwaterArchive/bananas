@@ -11,12 +11,24 @@ To start off you'll want to import the syntax
 import com.meltwater.pyro.syntax._
 ```
 
-## Assert
+## assert
 
 You can use the postfix `assert` method to easily assert over a value.
 
 ```tut
 "hello".assert("must be uppercase")(s => s.toUpperCase == s)
+```
+
+## asserts
+
+There's also a postfix `asserts` available to make multiple asserts over a value.
+
+```tut
+"".asserts(
+  _.assert("nonempty")(_.nonEmpty),
+  _.assert("uppercase")(s => s.toUpperCase == s),
+  _.assert("contains 1")(_.contains('1'))
+)
 ```
 
 ## assertEquals and diffs
@@ -28,3 +40,19 @@ import fr.thomasdufour.autodiff.generic.auto._
 case class Cat(name: String, age: Int)
 Cat("Terry", 4).assertEqual(Cat("Bob", 3))
 ```
+
+## a note on combining asserts
+
+Remember that since asserts actually just output a `ValidatedNel[String, ?]` you can always combine them by putting them in a tuple and calling `.tupled` like so:
+
+```tut
+import cats._, cats.implicits._
+(
+  10.assert("bigger than 12")(_ > 12),
+  "".asserts(
+    _.assert("nonEmpty")(_.nonEmpty),
+    _.assert("contains 1")(_.contains('1'))
+  )
+).tupled
+```
+
