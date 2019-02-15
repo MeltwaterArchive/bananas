@@ -8,6 +8,7 @@ import cats.implicits._
 import cats.data._
 import cats.effect._
 import cats.effect.implicits._
+import com.monovore.decline.{Command, Opts}
 import fs2._
 
 import scala.collection.mutable
@@ -22,15 +23,24 @@ class Bananas extends Framework {
 class BananasRunner extends Runner {
   val state = mutable.ListBuffer.empty[TestResult]
 
+  val seedOpt = Opts.option[Long]("seed", "seed for randomization of test data").withDefault(System.nanoTime())
+  val maxSamplesOpt = Opts.option[Int]("max-samples", "maximum number of samples to generate for property-based tests").withDefault(100)
+  val configCommand = Command("test", "Configuration for test") {
+    (seedOpt, maxSamplesOpt).mapN(Config(_, _))
+  }
+
   override def tasks(taskDefs: Array[TaskDef]): Array[Task] = taskDefs.map { t =>
     val w = Class.forName(t.fullyQualifiedName()).newInstance()
+    val config = configCommand.parse(args()) match {
+      case Left(help) => throw new RuntimeException(help.toString)
+      case Right(config) => config
+    }
     new Task {
       override def tags(): Array[String] = Array()
       override def execute(eventHandler: EventHandler, loggers: Array[Logger]): Array[Task] = {
         w match {
           case w: Spec[_] =>
             val F      = w.F
-            val config = Config(seed = System.nanoTime, maxSamples = 100) // todo: parse these from SBT
             loggers.foreach((_.info("Starting bananas test run")))
             F.toIO(w.run({ f =>
                 F.flatMap(F.attempt(f.run(config)(F))) {

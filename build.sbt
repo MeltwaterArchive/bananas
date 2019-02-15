@@ -32,7 +32,8 @@ lazy val bananasPlugin = project.in(file("bananas/plugin")).settings(commonSetti
   name := "bananas-plugin",
   sbtPlugin := true,
   libraryDependencies ++= Seq(
-    "com.lihaoyi" %% "fansi" % "0.2.5"
+    "com.lihaoyi" %% "fansi" % "0.2.5",
+    "com.monovore" %% "decline" % "0.5.0"
   )
 ).dependsOn(bananasCore)
 
