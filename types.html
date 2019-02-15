@@ -100,8 +100,8 @@
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
 <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.pyro.core.syntax._</span>
-<span class="k">import</span> <span class="nn">com.meltwater.pyro.core.syntax._</span>
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.pyro.syntax._</span>
+<span class="k">import</span> <span class="nn">com.meltwater.pyro.syntax._</span>
 
 <span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
 <span class="k">import</span> <span class="nn">cats._</span>
@@ -116,10 +116,13 @@
      <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
      <span class="o">|</span>     <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
      <span class="o">|</span>       <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>         <span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="n">compile</span>
+     <span class="o">|</span>         <span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
      <span class="o">|</span>       <span class="o">},</span>
-     <span class="o">|</span>       <span class="s">"perform subtraction"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>         <span class="o">(</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">compile</span>
+     <span class="o">|</span>       <span class="s">"check sizes"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+     <span class="o">|</span>         <span class="mf">42.</span><span class="n">asserts</span><span class="o">(</span>
+     <span class="o">|</span>           <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"less than 50"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="o">),</span>
+     <span class="o">|</span>           <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"bigger than 40"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="o">)</span>
+     <span class="o">|</span>         <span class="o">)</span>
      <span class="o">|</span>       <span class="o">}</span>
      <span class="o">|</span>     <span class="o">)</span>
      <span class="o">|</span> <span class="o">}</span>
