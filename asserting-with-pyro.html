@@ -18,6 +18,24 @@
 <span class="n">res0</span><span class="k">:</span> <span class="kt">cats.data.ValidatedNel</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res0</span><span class="k">:</span><span class="err">16</span> <span class="kt">must</span> <span class="kt">be</span> <span class="kt">uppercase</span><span class="o">))</span>
 </code></pre></div></div>
 
+<h2 id="assertequals-and-diffs">assertEquals and diffs</h2>
+
+<p>This library uses <a href="https://github.com/chwthewke/auto-diff">auto-diff</a> for assertEquals and diff support, if you depend on it’s generic module you can get nice error messages when asserting case classes are equal like so:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fr.thomasdufour.autodiff.generic.auto._</span>
+<span class="k">import</span> <span class="nn">fr.thomasdufour.autodiff.generic.auto._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">Cat</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+<span class="n">defined</span> <span class="k">class</span> <span class="nc">Cat</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="nc">Cat</span><span class="o">(</span><span class="s">"Terry"</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="nc">Cat</span><span class="o">(</span><span class="s">"Bob"</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span>
+<span class="n">res1</span><span class="k">:</span> <span class="kt">cats.data.ValidatedNel</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">Cat</span><span class="o">]</span> <span class="k">=</span>
+<span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res1</span><span class="k">:</span><span class="err">21</span> <span class="kt">in</span> <span class="kt">Cat</span>
+<span class="o">-</span> <span class="n">name</span>
+  <span class="o">-</span> <span class="nc">Bob</span> <span class="o">-&gt;</span> <span class="nc">Terry</span>
+<span class="o">-</span> <span class="n">age</span>
+  <span class="o">-</span> <span class="mi">3</span> <span class="o">-&gt;</span> <span class="mi">4</span><span class="o">))</span>
+</code></pre></div></div>
 
 
 <link rel="stylesheet" type="text/css" href="/bananas/css/toc.css"></link>
