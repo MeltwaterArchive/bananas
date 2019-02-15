@@ -42,91 +42,62 @@
 
 <p>Here’s a simple example which doesn’t use the DSL:</p>
 
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
-<span class="k">import</span> <span class="nn">cats._</span>
-<span class="k">import</span> <span class="nn">cats.implicits._</span>
-<span class="k">import</span> <span class="nn">cats.effect._</span>
-<span class="k">import</span> <span class="nn">cats.data._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+<span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
 <span class="k">import</span> <span class="nn">fs2._</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="o">{</span>
-     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
-     <span class="o">|</span>     <span class="nc">Stream</span><span class="o">.</span><span class="n">emit</span><span class="o">(</span>
-     <span class="o">|</span>       <span class="nc">StandardTest</span><span class="o">(</span>
-     <span class="o">|</span>         <span class="nc">NonEmptyChain</span><span class="o">(</span><span class="s">"maths"</span><span class="o">,</span> <span class="s">"addition"</span><span class="o">),</span>
-     <span class="o">|</span>         <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>           <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
-     <span class="o">|</span>         <span class="o">}</span>
-     <span class="o">|</span>       <span class="o">)</span>
-     <span class="o">|</span>     <span class="o">)</span>
-     <span class="o">|</span> <span class="o">}</span>
-<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+<span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+    <span class="nc">Stream</span><span class="o">.</span><span class="n">emit</span><span class="o">(</span>
+      <span class="nc">StandardTest</span><span class="o">(</span>
+        <span class="nc">NonEmptyChain</span><span class="o">(</span><span class="s">"maths"</span><span class="o">,</span> <span class="s">"addition"</span><span class="o">),</span>
+        <span class="nc">IO</span> <span class="o">{</span>
+          <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
+        <span class="o">}</span>
+      <span class="o">)</span>
+    <span class="o">)</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p>This is a little bit verbose, but should give you an idea of how the types are laid out.</p>
 
 <p>Here’s an example with the <code class="highlighter-rouge">NestedDsl</code>:</p>
 
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
-<span class="k">import</span> <span class="nn">cats._</span>
-<span class="k">import</span> <span class="nn">cats.implicits._</span>
-<span class="k">import</span> <span class="nn">cats.effect._</span>
-<span class="k">import</span> <span class="nn">cats.data._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+<span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
 <span class="k">import</span> <span class="nn">fs2._</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
-     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
-     <span class="o">|</span>     <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
-     <span class="o">|</span>       <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>         <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
-     <span class="o">|</span>       <span class="o">}</span>
-     <span class="o">|</span>     <span class="o">)</span>
-     <span class="o">|</span> <span class="o">}</span>
-<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+<span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+    <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
+      <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+        <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
+      <span class="o">}</span>
+    <span class="o">)</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p>And an example with the <code class="highlighter-rouge">Pyro</code> asserts DSL:</p>
 
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.pyro.syntax._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
 <span class="k">import</span> <span class="nn">com.meltwater.pyro.syntax._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
-<span class="k">import</span> <span class="nn">cats._</span>
-<span class="k">import</span> <span class="nn">cats.implicits._</span>
-<span class="k">import</span> <span class="nn">cats.effect._</span>
-<span class="k">import</span> <span class="nn">cats.data._</span>
-
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
 <span class="k">import</span> <span class="nn">fs2._</span>
 
-<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
-     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
-     <span class="o">|</span>     <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
-     <span class="o">|</span>       <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>         <span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-     <span class="o">|</span>       <span class="o">},</span>
-     <span class="o">|</span>       <span class="s">"check sizes"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
-     <span class="o">|</span>         <span class="mf">42.</span><span class="n">asserts</span><span class="o">(</span>
-     <span class="o">|</span>           <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"less than 50"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="o">),</span>
-     <span class="o">|</span>           <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"bigger than 40"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="o">)</span>
-     <span class="o">|</span>         <span class="o">)</span>
-     <span class="o">|</span>       <span class="o">}</span>
-     <span class="o">|</span>     <span class="o">)</span>
-     <span class="o">|</span> <span class="o">}</span>
-<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+<span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+    <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
+      <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+        <span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+      <span class="o">},</span>
+      <span class="s">"check sizes"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+        <span class="mf">42.</span><span class="n">asserts</span><span class="o">(</span>
+          <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"less than 50"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="o">),</span>
+          <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"bigger than 40"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="o">)</span>
+        <span class="o">)</span>
+      <span class="o">}</span>
+    <span class="o">)</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p>To learn more about using <code class="highlighter-rouge">pyro</code> please see the pyro section.</p>
