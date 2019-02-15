@@ -10,12 +10,24 @@
 <span class="k">import</span> <span class="nn">com.meltwater.pyro.syntax._</span>
 </code></pre></div></div>
 
-<h2 id="assert">Assert</h2>
+<h2 id="assert">assert</h2>
 
 <p>You can use the postfix <code class="highlighter-rouge">assert</code> method to easily assert over a value.</p>
 
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="s">"hello"</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"must be uppercase"</span><span class="o">)(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">toUpperCase</span> <span class="o">==</span> <span class="n">s</span><span class="o">)</span>
 <span class="n">res0</span><span class="k">:</span> <span class="kt">cats.data.ValidatedNel</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res0</span><span class="k">:</span><span class="err">16</span> <span class="kt">must</span> <span class="kt">be</span> <span class="kt">uppercase</span><span class="o">))</span>
+</code></pre></div></div>
+
+<h2 id="asserts">asserts</h2>
+
+<p>There’s also a postfix <code class="highlighter-rouge">asserts</code> available to make multiple asserts over a value.</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="s">""</span><span class="o">.</span><span class="n">asserts</span><span class="o">(</span>
+     <span class="o">|</span>   <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"nonempty"</span><span class="o">)(</span><span class="k">_</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">),</span>
+     <span class="o">|</span>   <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"uppercase"</span><span class="o">)(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">toUpperCase</span> <span class="o">==</span> <span class="n">s</span><span class="o">),</span>
+     <span class="o">|</span>   <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"contains 1"</span><span class="o">)(</span><span class="k">_</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="sc">'1'</span><span class="o">))</span>
+     <span class="o">|</span> <span class="o">)</span>
+<span class="n">res1</span><span class="k">:</span> <span class="kt">cats.data.Validated</span><span class="o">[</span><span class="kt">cats.data.NonEmptyList</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span>,<span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res1</span> <span class="nc">$anonfun</span><span class="k">:</span><span class="err">17</span> <span class="kt">nonempty</span><span class="o">,</span> <span class="n">res1</span> <span class="nc">$anonfun</span><span class="k">:</span><span class="err">19</span> <span class="kt">contains</span> <span class="err">1</span><span class="o">))</span>
 </code></pre></div></div>
 
 <h2 id="assertequals-and-diffs">assertEquals and diffs</h2>
@@ -29,13 +41,32 @@
 <span class="n">defined</span> <span class="k">class</span> <span class="nc">Cat</span>
 
 <span class="n">scala</span><span class="o">&gt;</span> <span class="nc">Cat</span><span class="o">(</span><span class="s">"Terry"</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="nc">Cat</span><span class="o">(</span><span class="s">"Bob"</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span>
-<span class="n">res1</span><span class="k">:</span> <span class="kt">cats.data.ValidatedNel</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">Cat</span><span class="o">]</span> <span class="k">=</span>
-<span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res1</span><span class="k">:</span><span class="err">21</span> <span class="kt">in</span> <span class="kt">Cat</span>
+<span class="n">res2</span><span class="k">:</span> <span class="kt">cats.data.ValidatedNel</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">Cat</span><span class="o">]</span> <span class="k">=</span>
+<span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res2</span><span class="k">:</span><span class="err">21</span> <span class="kt">in</span> <span class="kt">Cat</span>
 <span class="o">-</span> <span class="n">name</span>
   <span class="o">-</span> <span class="nc">Bob</span> <span class="o">-&gt;</span> <span class="nc">Terry</span>
 <span class="o">-</span> <span class="n">age</span>
   <span class="o">-</span> <span class="mi">3</span> <span class="o">-&gt;</span> <span class="mi">4</span><span class="o">))</span>
 </code></pre></div></div>
+
+<h2 id="a-note-on-combining-asserts">a note on combining asserts</h2>
+
+<p>Remember that since asserts actually just output a <code class="highlighter-rouge">ValidatedNel[String, ?]</code> you can always combine them by putting them in a tuple and calling <code class="highlighter-rouge">.tupled</code> like so:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span>
+<span class="k">import</span> <span class="nn">cats._</span>
+<span class="k">import</span> <span class="nn">cats.implicits._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="o">(</span>
+     <span class="o">|</span>   <span class="mf">10.</span><span class="n">assert</span><span class="o">(</span><span class="s">"bigger than 12"</span><span class="o">)(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="o">),</span>
+     <span class="o">|</span>   <span class="s">""</span><span class="o">.</span><span class="n">asserts</span><span class="o">(</span>
+     <span class="o">|</span>     <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"nonEmpty"</span><span class="o">)(</span><span class="k">_</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">),</span>
+     <span class="o">|</span>     <span class="k">_</span><span class="o">.</span><span class="n">assert</span><span class="o">(</span><span class="s">"contains 1"</span><span class="o">)(</span><span class="k">_</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="sc">'1'</span><span class="o">))</span>
+     <span class="o">|</span>   <span class="o">)</span>
+     <span class="o">|</span> <span class="o">).</span><span class="n">tupled</span>
+<span class="n">res3</span><span class="k">:</span> <span class="kt">cats.data.Validated</span><span class="o">[</span><span class="kt">cats.data.NonEmptyList</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span>,<span class="o">(</span><span class="kt">Int</span>, <span class="kt">Unit</span><span class="o">)]</span> <span class="k">=</span> <span class="nc">Invalid</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">res3</span><span class="k">:</span><span class="err">26</span> <span class="kt">bigger</span> <span class="kt">than</span> <span class="err">12</span><span class="o">,</span> <span class="n">res3</span> <span class="nc">$anonfun</span><span class="k">:</span><span class="err">28</span> <span class="kt">nonEmpty</span><span class="o">,</span> <span class="n">res3</span> <span class="nc">$anonfun</span><span class="k">:</span><span class="err">29</span> <span class="kt">contains</span> <span class="err">1</span><span class="o">))</span>
+</code></pre></div></div>
+
 
 
 <link rel="stylesheet" type="text/css" href="/bananas/css/toc.css"></link>
