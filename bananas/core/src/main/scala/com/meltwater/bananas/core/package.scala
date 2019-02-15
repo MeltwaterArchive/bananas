@@ -42,6 +42,7 @@ package object core {
         .take(config.maxSamples)
         .compile
         .foldMonoid
+        .map(_.leftMap(_.map(_ + s" (seed: ${config.seed})")))
     }
   }
 
