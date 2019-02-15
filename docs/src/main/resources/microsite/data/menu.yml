@@ -4,6 +4,8 @@ options:
     url: introduction.html
   - title: Core Types
     url: types.html
+  - title: Property Testing
+    url: property-testing.html
   - title: Using the Plugin
     url: plugin.html
   - title: Asserting with Pyro
