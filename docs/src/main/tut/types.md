@@ -98,8 +98,11 @@ class ExampleSpec extends Spec[IO] with NestedDsl {
       "perform addition" in IO {
         (1 + 1).assertEqual(2)
       },
-      "perform subtraction" in IO {
-        (2 - 1).assertEqual(1)
+      "check sizes" in IO {
+        42.asserts(
+          _.assert("less than 50")(_ < 50),
+          _.assert("bigger than 40")(_ > 40)
+        )
       }
     )
 }

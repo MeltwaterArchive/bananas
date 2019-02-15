@@ -17,6 +17,4 @@ object syntax {
     }
     def asserts(vs: (A => ValidatedNel[String, _])*): ValidatedNel[String, Unit] = vs.toList.map(f => f(a).void).combineAll
   }
-
-  implicit def voidableValidated[A](v: ValidatedNel[String, A]): ValidatedNel[String, Unit] = v.void
 }
