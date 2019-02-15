@@ -1,4 +1,4 @@
-package net.andimiller.bananas
+package com.meltwater.bananas
 
 import cats._
 import cats.data._

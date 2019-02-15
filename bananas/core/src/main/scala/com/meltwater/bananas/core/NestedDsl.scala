@@ -1,4 +1,4 @@
-package net.andimiller.bananas.core
+package com.meltwater.bananas.core
 
 import cats._, cats.implicits._, cats.data._, cats.effect._
 import fs2._
