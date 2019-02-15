@@ -41,7 +41,7 @@ trait PropertyTests[F[_]] {
     }
 
     def apply[T](f: A => F[ValidatedNel[String, T]]): Test[F] = {
-      PropertyBasedTest[F, A, T](ss, gen, f.map(_.map(_.void)))
+      PropertyTest[F, A, T](ss, gen, f.map(_.map(_.void)))
     }
   }
 }
@@ -66,7 +66,7 @@ trait NestedDsl {
     private def grammar[F[_]](t: Test[F]): Test[F] = t match {
       case t: StandardTest[F] =>
         t.copy(labels = ss ++ NonEmptyChain.fromChainPrepend(v + " " + t.labels.head, t.labels.tail))
-      case t: PropertyBasedTest[F, _, _] =>
+      case t: PropertyTest[F, _, _] =>
         t.copy(labels = ss ++ NonEmptyChain.fromChainPrepend(v + " " + t.labels.head, t.labels.tail))
     }
     def apply[F[_]](t: Tests[F]): Tests[F]            = t.map(grammar)
