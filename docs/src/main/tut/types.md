@@ -1,6 +1,6 @@
 ---
 layout: docsplus
-title: Types
+title: Core Types
 ---
 
 In this section we go on a journey through the most important types in Bananas.

@@ -57,4 +57,5 @@ lazy val docs = project.in(file("docs")).settings(commonSettings).enablePlugins(
   ),
   micrositeDocumentationUrl := "/bananas/introduction.html",
   scalacOptions in Tut += "-Ypartial-unification",
+  libraryDependencies += "fr.thomasdufour" %% "auto-diff-generic" % "0.3.0-RC1",
 ).dependsOn(pyro).dependsOn(bananasCore)
