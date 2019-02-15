@@ -47,7 +47,7 @@ object core {
     }
   }
   object syntax {
-    implicit def toAsserts[A](a: A): Asserts[A] = Asserts(a, Nil)
+    implicit def toAsserts[A](a: A): Asserts[A]                                   = Asserts(a, Nil)
     implicit def autoCompileAsserts[A](a: Asserts[A]): ValidatedNel[String, Unit] = a.compile
   }
 }

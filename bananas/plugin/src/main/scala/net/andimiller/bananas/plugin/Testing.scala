@@ -1,6 +1,6 @@
 package net.andimiller.bananas.plugin
 
-import net.andimiller.bananas.core.{Assertions, Reporters, Spec, TestResult, Config}
+import net.andimiller.bananas.core.{Assertions, Config, Reporters, Spec, TestResult}
 import sbt.testing._
 import cats._
 import cats.data.Validated.{Invalid, Valid}
@@ -29,13 +29,13 @@ class BananasRunner extends Runner {
       override def execute(eventHandler: EventHandler, loggers: Array[Logger]): Array[Task] = {
         w match {
           case w: Spec[_] =>
-            val F = w.F
+            val F      = w.F
             val config = Config(seed = System.nanoTime, maxSamples = 100) // todo: parse these from SBT
             loggers.foreach((_.info("Starting bananas test run")))
             F.toIO(w.run({ f =>
                 F.flatMap(F.attempt(f.run(config)(F))) {
                   r =>
-                    val result = r.asInstanceOf[Either[Throwable, Assertions]]
+                    val result     = r.asInstanceOf[Either[Throwable, Assertions]]
                     val testResult = TestResult(f.labels, result)
                     F.delay {
                       state.append(testResult)
@@ -76,21 +76,25 @@ class BananasRunner extends Runner {
     (s.headOption.map(initial + _).toList ++ s.tail.map(prefixes + _)).mkString(delim)
   }
 
-  override def done(): String              = {
-    Reporters.report(state.toList).toList.map { r =>
-      val colour = r.result match {
-        case Left(e)           => fansi.Color.Magenta
-        case Right(Valid(_))   => fansi.Color.Green
-        case Right(Invalid(i)) => fansi.Color.Red
+  override def done(): String = {
+    Reporters
+      .report(state.toList)
+      .toList
+      .map { r =>
+        val colour = r.result match {
+          case Left(e)           => fansi.Color.Magenta
+          case Right(Valid(_))   => fansi.Color.Green
+          case Right(Invalid(i)) => fansi.Color.Red
+        }
+        val labels = r.labels.toList.mkString(" ")
+        val error = r.result match {
+          case Left(e)            => Some(indent(e.getStackTrace.toList.map(_.toString), "* ", "", "\n"))
+          case Right(Valid(_))    => None
+          case Right(Invalid(is)) => Some(indent(is.toList, "* ", "", "\n"))
+        }
+        (labels + error.map("\n" + _).getOrElse("")).split('\n').map(s => colour(s)).mkString("\n")
       }
-      val labels = r.labels.toList.mkString(" ")
-      val error = r.result match {
-        case Left(e) => Some(indent(e.getStackTrace.toList.map(_.toString), "* ", "", "\n"))
-        case Right(Valid(_)) => None
-        case Right(Invalid(is)) => Some(indent(is.toList, "* ", "", "\n"))
-      }
-      (labels + error.map("\n" + _).getOrElse("")).split('\n').map(s => colour(s)).mkString("\n")
-    }.mkString("\n")
+      .mkString("\n")
   }
   override def remoteArgs(): Array[String] = Array()
   override def args(): Array[String]       = Array()

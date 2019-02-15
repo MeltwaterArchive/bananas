@@ -9,7 +9,7 @@ trait PropertyTests[F[_]] {
       PartialPropertyGrammarNode(s)
     }
 
-    def forAll[A, B](implicit ga: Gen[F, A], gb: Gen[F, B],F: Functor[F]): PartialPropertyGrammarNode[(A, B)] = {
+    def forAll[A, B](implicit ga: Gen[F, A], gb: Gen[F, B], F: Functor[F]): PartialPropertyGrammarNode[(A, B)] = {
       PartialPropertyGrammarNode(s)
     }
 
@@ -17,17 +17,25 @@ trait PropertyTests[F[_]] {
       PartialPropertyGrammarNode(s)
     }
 
-    def forAll[A, B, C, D](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D], F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D)] = {
+    def forAll[A, B, C, D](implicit ga: Gen[F, A],
+                           gb: Gen[F, B],
+                           gc: Gen[F, C],
+                           gd: Gen[F, D],
+                           F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D)] = {
       PartialPropertyGrammarNode(s)
     }
 
-    def forAll[A, B, C, D, E](implicit ga: Gen[F, A], gb: Gen[F, B], gc: Gen[F, C], gd: Gen[F, D], ge: Gen[F, E], F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D, E)] = {
+    def forAll[A, B, C, D, E](implicit ga: Gen[F, A],
+                              gb: Gen[F, B],
+                              gc: Gen[F, C],
+                              gd: Gen[F, D],
+                              ge: Gen[F, E],
+                              F: Functor[F]): PartialPropertyGrammarNode[(A, B, C, D, E)] = {
       PartialPropertyGrammarNode(s)
     }
   }
 
-  case class PartialPropertyGrammarNode[A](ss: NonEmptyChain[String])
-                                          (implicit gen: Gen[F, A], F: Functor[F]) {
+  case class PartialPropertyGrammarNode[A](ss: NonEmptyChain[String])(implicit gen: Gen[F, A], F: Functor[F]) {
     def whenever(predicate: A => Boolean): PartialPropertyGrammarNode[A] = {
       PartialPropertyGrammarNode[A](ss)(gen.filter(predicate), F)
     }
