@@ -1,0 +1,137 @@
+<html><head><title>Bananas: Types</title><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Meltwater" /><meta name="description" content="A purely functional test framework" /><meta name="og:image" content="/img/poster.png" /><meta name="image" property="og:image" content="/img/poster.png" /><meta name="og:title" content="Bananas: Types" /><meta name="title" property="og:title" content="Bananas: Types" /><meta name="og:site_name" content="Bananas" /><meta name="og:url" content="" /><meta name="og:type" content="website" /><meta name="og:description" content="A purely functional test framework" /><link rel="icon" type="image/png" href="/img/favicon.png" /><meta name="twitter:title" content="Bananas: Types" /><meta name="twitter:image" content="https://meltwater.github.io/img/poster.png" /><meta name="twitter:description" content="A purely functional test framework" /><meta name="twitter:card" content="summary_large_image" /><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon16x16.png" /><link rel="icon" type="image/png" sizes="24x24" href="/img/favicon24x24.png" /><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon32x32.png" /><link rel="icon" type="image/png" sizes="48x48" href="/img/favicon48x48.png" /><link rel="icon" type="image/png" sizes="57x57" href="/img/favicon57x57.png" /><link rel="icon" type="image/png" sizes="60x60" href="/img/favicon60x60.png" /><link rel="icon" type="image/png" sizes="64x64" href="/img/favicon64x64.png" /><link rel="icon" type="image/png" sizes="70x70" href="/img/favicon70x70.png" /><link rel="icon" type="image/png" sizes="72x72" href="/img/favicon72x72.png" /><link rel="icon" type="image/png" sizes="76x76" href="/img/favicon76x76.png" /><link rel="icon" type="image/png" sizes="96x96" href="/img/favicon96x96.png" /><link rel="icon" type="image/png" sizes="114x114" href="/img/favicon114x114.png" /><link rel="icon" type="image/png" sizes="120x120" href="/img/favicon120x120.png" /><link rel="icon" type="image/png" sizes="128x128" href="/img/favicon128x128.png" /><link rel="icon" type="image/png" sizes="144x144" href="/img/favicon144x144.png" /><link rel="icon" type="image/png" sizes="150x150" href="/img/favicon150x150.png" /><link rel="icon" type="image/png" sizes="152x152" href="/img/favicon152x152.png" /><link rel="icon" type="image/png" sizes="196x196" href="/img/favicon196x196.png" /><link rel="icon" type="image/png" sizes="310x310" href="/img/favicon310x310.png" /><link rel="icon" type="image/png" sizes="310x150" href="/img/favicon310x150.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/highlight/styles/default.css" /><link rel="stylesheet" href="/css/style.css" /><link rel="stylesheet" href="/css/palette.css" /><link rel="stylesheet" href="/css/codemirror.css" /><link rel="stylesheet" href="/css/override.css" /><link rel="stylesheet" href="/css/toc.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><ul id="sidebar" class="sidebar-nav"><li class="sidebar-brand"><a href="/" class="brand"><div class="brand-wrapper"><span>Bananas</span></div></a></li> <li><a href="/introduction.html" class="">Introduction</a></li> <li><a href="/types.html" class="">Core Types</a></li> <li><a href="/plugin.html" class="">Using the Plugin</a></li> <li><a href="/asserting-with-pyro.html" class="">Asserting with Pyro</a></li> <li><a href="/whales.html" class="">Integrating your Integration Testing with Whales</a></li></ul></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li id="gh-eyes-item" class="hidden-xs"><a href="https://github.com/meltwater/bananas"><i class="fa fa-eye"></i><span>WATCH<span id="eyes" class="label label-default">--</span></span></a></li><li id="gh-stars-item" class="hidden-xs"><a href="https://github.com/meltwater/bananas"><i class="fa fa-star-o"></i><span>STARS<span id="stars" class="label label-default">--</span></span></a></li><li><a href="#" onclick="shareSiteTwitter('Bananas A purely functional test framework');"><i class="fa fa-twitter"></i></a></li><li><a href="#" onclick="shareSiteFacebook('Bananas A purely functional test framework');"><i class="fa fa-facebook"></i></a></li><li><a href="#" onclick="shareSiteGoogle();"><i class="fa fa-google-plus"></i></a></li></ul></div></div></div></div><div id="content" data-github-owner="meltwater" data-github-repo="bananas"><div class="content-wrapper"><section><h1>Types</h1>
+
+<nav role="navigation" id="toc"></nav>
+
+<p>In this section we go on a journey through the most important types in Bananas.</p>
+
+<h2 id="standardtest">StandardTest</h2>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="k">class</span> <span class="nc">StandardTest</span><span class="o">[</span><span class="kt">F</span><span class="o">[</span><span class="k">_</span><span class="o">]](</span><span class="n">labels</span><span class="k">:</span> <span class="kt">NonEmptyChain</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="n">test</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">Assertions</span><span class="o">])</span>
+</code></pre></div></div>
+
+<p>so in Bananas, a standard test has some lebels, and an F which outputs some <code class="highlighter-rouge">Assertions</code></p>
+
+<h2 id="assertions">Assertions</h2>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="kt">Assertions</span>  <span class="o">=</span> <span class="nc">ValidatedNel</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Unit</span><span class="o">]</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">Assertions</code> are a <code class="highlighter-rouge">ValidatedNel</code> of strings, or Unit, we don’t actually need an output type when tests are run, so we can just <code class="highlighter-rouge">_.void</code> the <code class="highlighter-rouge">ValidatedNel</code>.</p>
+
+<p>To learn more about <code class="highlighter-rouge">Validated</code> and <code class="highlighter-rouge">ValidatedNel</code> I recommend reading the <a href="https://typelevel.org/cats/datatypes/validated.html">official docs</a>.</p>
+
+<h2 id="tests">Tests</h2>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">F</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Stream</span><span class="o">[</span><span class="kt">F</span>, <span class="kt">Test</span><span class="o">[</span><span class="kt">F</span><span class="o">]]</span>
+</code></pre></div></div>
+
+<p>A set of tests is just an fs2 stream of tests, this allows you extra flow control if you want to get fancy with resources when generating your tests, and allows you to do “table-driven” or property tests easily.</p>
+
+<h2 id="spec">Spec</h2>
+
+<p>Onto the first interface, a <code class="highlighter-rouge">Spec</code> is the main type of test in bananas.</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">F</span><span class="o">[</span><span class="k">_</span><span class="o">]](</span><span class="k">implicit</span> <span class="k">val</span> <span class="n">F</span><span class="k">:</span> <span class="kt">Effect</span><span class="o">[</span><span class="kt">F</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">Banana</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">F</span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>It extends <code class="highlighter-rouge">Banana</code>, which is our autodiscovery type for running tests in sbt.</p>
+
+<p>It’s defined over an <code class="highlighter-rouge">F[_]</code> which should be your effect type, and you need to define some tests, that’s it.</p>
+
+<p>Here’s a simple example which doesn’t use the DSL:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
+<span class="k">import</span> <span class="nn">cats._</span>
+<span class="k">import</span> <span class="nn">cats.implicits._</span>
+<span class="k">import</span> <span class="nn">cats.effect._</span>
+<span class="k">import</span> <span class="nn">cats.data._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<span class="k">import</span> <span class="nn">fs2._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="o">{</span>
+     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+     <span class="o">|</span>     <span class="nc">Stream</span><span class="o">.</span><span class="n">emit</span><span class="o">(</span>
+     <span class="o">|</span>       <span class="nc">StandardTest</span><span class="o">(</span>
+     <span class="o">|</span>         <span class="nc">NonEmptyChain</span><span class="o">(</span><span class="s">"maths"</span><span class="o">,</span> <span class="s">"addition"</span><span class="o">),</span>
+     <span class="o">|</span>         <span class="nc">IO</span> <span class="o">{</span>
+     <span class="o">|</span>           <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
+     <span class="o">|</span>         <span class="o">}</span>
+     <span class="o">|</span>       <span class="o">)</span>
+     <span class="o">|</span>     <span class="o">)</span>
+     <span class="o">|</span> <span class="o">}</span>
+<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+</code></pre></div></div>
+
+<p>This is a little bit verbose, but should give you an idea of how the types are laid out.</p>
+
+<p>Here’s an example with the <code class="highlighter-rouge">NestedDsl</code>:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
+<span class="k">import</span> <span class="nn">cats._</span>
+<span class="k">import</span> <span class="nn">cats.implicits._</span>
+<span class="k">import</span> <span class="nn">cats.effect._</span>
+<span class="k">import</span> <span class="nn">cats.data._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<span class="k">import</span> <span class="nn">fs2._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
+     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+     <span class="o">|</span>     <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
+     <span class="o">|</span>       <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+     <span class="o">|</span>         <span class="nc">Validated</span><span class="o">.</span><span class="n">cond</span><span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">Unit</span><span class="o">,</span> <span class="nc">NonEmptyList</span><span class="o">.</span><span class="n">of</span><span class="o">(</span><span class="s">"1 and 1 did not equal 2"</span><span class="o">))</span>
+     <span class="o">|</span>       <span class="o">}</span>
+     <span class="o">|</span>     <span class="o">)</span>
+     <span class="o">|</span> <span class="o">}</span>
+<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+</code></pre></div></div>
+
+<p>And an example with the <code class="highlighter-rouge">Pyro</code> asserts DSL:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+<span class="k">import</span> <span class="nn">com.meltwater.bananas.core._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">com.meltwater.pyro.core.syntax._</span>
+<span class="k">import</span> <span class="nn">com.meltwater.pyro.core.syntax._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">cats._</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">implicits</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="k">_</span><span class="o">,</span> <span class="n">cats</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="k">_</span>
+<span class="k">import</span> <span class="nn">cats._</span>
+<span class="k">import</span> <span class="nn">cats.implicits._</span>
+<span class="k">import</span> <span class="nn">cats.effect._</span>
+<span class="k">import</span> <span class="nn">cats.data._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">fs2._</span>
+<span class="k">import</span> <span class="nn">fs2._</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ExampleSpec</span> <span class="k">extends</span> <span class="nc">Spec</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">with</span> <span class="nc">NestedDsl</span> <span class="o">{</span>
+     <span class="o">|</span>   <span class="k">override</span> <span class="k">def</span> <span class="n">tests</span><span class="k">:</span> <span class="kt">Tests</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span>
+     <span class="o">|</span>     <span class="s">"maths"</span> <span class="n">should</span> <span class="o">(</span>
+     <span class="o">|</span>       <span class="s">"perform addition"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+     <span class="o">|</span>         <span class="o">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="n">compile</span>
+     <span class="o">|</span>       <span class="o">},</span>
+     <span class="o">|</span>       <span class="s">"perform subtraction"</span> <span class="n">in</span> <span class="nc">IO</span> <span class="o">{</span>
+     <span class="o">|</span>         <span class="o">(</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).</span><span class="n">assertEqual</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">compile</span>
+     <span class="o">|</span>       <span class="o">}</span>
+     <span class="o">|</span>     <span class="o">)</span>
+     <span class="o">|</span> <span class="o">}</span>
+<span class="n">defined</span> <span class="k">class</span> <span class="nc">ExampleSpec</span>
+</code></pre></div></div>
+
+<p>To learn more about using <code class="highlighter-rouge">pyro</code> please see the pyro section.</p>
+
+
+<link rel="stylesheet" type="text/css" href="/css/toc.css"></link>
+<script type="text/javascript" src="/js/toc.js"></script>
+</section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/highlight/highlight.pack.js"></script><script>hljs.configure({languages:['scala','java','bash']});
+hljs.initHighlighting();
+              </script><script>((window.gitter = {}).chat = {}).options = {
+room: 'meltwater/bananas'};</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js"></script><script src="/js/main.js"></script></body></html>
