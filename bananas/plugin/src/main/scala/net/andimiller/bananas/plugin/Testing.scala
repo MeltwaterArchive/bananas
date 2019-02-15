@@ -1,12 +1,13 @@
 package net.andimiller.bananas.plugin
 
-import net.andimiller.bananas.core.{Assertions, Reporters, Spec, TestResult}
+import net.andimiller.bananas.core.{Assertions, Reporters, Spec, TestResult, Config}
 import sbt.testing._
 import cats._
 import cats.data.Validated.{Invalid, Valid}
 import cats.implicits._
 import cats.data._
 import cats.effect._
+import cats.effect.implicits._
 import fs2._
 
 import scala.collection.mutable
@@ -29,9 +30,10 @@ class BananasRunner extends Runner {
         w match {
           case w: Spec[_] =>
             val F = w.F
+            val config = Config(seed = System.nanoTime, maxSamples = 100) // todo: parse these from SBT
             loggers.foreach((_.info("Starting bananas test run")))
             F.toIO(w.run({ f =>
-                F.flatMap(F.attempt(f.test)) {
+                F.flatMap(F.attempt(f.run(config)(F))) {
                   r =>
                     val result = r.asInstanceOf[Either[Throwable, Assertions]]
                     val testResult = TestResult(f.labels, result)
