@@ -88,7 +88,7 @@ And an example with the `Pyro` asserts DSL:
 
 ```tut:reset
 import com.meltwater.bananas.core._
-import com.meltwater.pyro.core.syntax._
+import com.meltwater.pyro.syntax._
 import cats._, cats.implicits._, cats.effect._, cats.data._
 import fs2._
 
@@ -96,10 +96,10 @@ class ExampleSpec extends Spec[IO] with NestedDsl {
   override def tests: Tests[IO] =
     "maths" should (
       "perform addition" in IO {
-        (1 + 1).assertEqual(2).compile
+        (1 + 1).assertEqual(2)
       },
       "perform subtraction" in IO {
-        (2 - 1).assertEqual(1).compile
+        (2 - 1).assertEqual(1)
       }
     )
 }
