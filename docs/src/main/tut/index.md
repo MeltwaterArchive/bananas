@@ -17,7 +17,7 @@ Bananas is a core test library and plugin, and a curated set of libraries, these
 
 # Example
 
-```scala
+```tut:silent:nofail
 import cats._, cats.implicits._, cats.data._
 import cats.effect._
 import com.meltwater.bananas.core.{NestedDsl, Spec, Tests}
@@ -64,4 +64,8 @@ class ExampleTest extends Spec[IO] with NestedDsl {
       }
     )
 
-}```
+}
+```
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/bananas/highlight/highlight.pack.js"></script><script>hljs.configure({languages:['scala','java','bash']});
+hljs.initHighlighting();</script>
