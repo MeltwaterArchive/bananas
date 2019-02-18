@@ -22,6 +22,55 @@
     </tr>
   </tbody>
 </table>
+
+<h1 id="example">Example</h1>
+
+<p>```scala
+import cats.<em>, cats.implicits.</em>, cats.data._
+import cats.effect._
+import com.meltwater.bananas.core.{NestedDsl, Spec, Tests}
+import com.meltwater.pyro.syntax._
+import fr.thomasdufour.autodiff.generic.auto._
+import net.andimiller.whales._
+import doobie.<em>, doobie.implicits.</em>
+import Types.Cat</p>
+
+<p>import scala.concurrent.ExecutionContext</p>
+
+<p>class ExampleTest extends Spec[IO] with NestedDsl {
+  implicit val timer = IO.timer(ExecutionContext.global)
+  implicit val cs = IO.contextShift(ExecutionContext.global)</p>
+
+<p>def postgres[F[_]: Effect: Timer] = for {
+    docker &lt;- Docker[F]
+    mysql &lt;- docker(“postgres”, “11”, env = Map(
+      “POSTGRES_PASSWORD” -&gt; “catpw”
+    ), ports = List(5432))
+    _ &lt;- mysql.waitForPort<a href="5432">F</a>
+  } yield mysql</p>
+
+<p>def makeXa(ip: String) = IO {
+    Transactor.fromDriverManager<a href="" title="org.postgresql.Driver&quot;, s&quot;jdbc:postgresql://${ip}:5432/postgres&quot;, &quot;postgres&quot;, &quot;catpw">IO</a>
+  }</p>
+
+<p>override def tests: Tests[IO] =
+    “the DAO” should(
+      “provision and use a database” in postgres[IO].use { postgres =&gt;
+        for {
+          xa &lt;- makeXa(postgres.ipAddress)
+          dao = new Dao[IO]
+          _ &lt;- dao.provision.transact(xa)
+          insert &lt;- dao.insert(Cat(“Terry”, 4)).transact(xa)
+          results &lt;- dao.findByName(“Terry”).transact(xa)
+        } yield results.assertEqual(List(Cat(“Terry”, 4)))
+      },
+      “fail gracefully” in IO {
+        val a = 2
+        a.assert(s”$a should be 3”)(_ == 3)
+      }
+    )</p>
+
+<p>}```</p>
 </div></div></section><section class="technologies"><div class="container"><div class="row">
             <div class="col-md-4"><div class="first-icon-wrapper"></div><h3>cats</h3><p>cats can be scared by bananas</p></div>
           
