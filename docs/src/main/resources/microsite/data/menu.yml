@@ -7,7 +7,7 @@ options:
   - title: Property Testing
     url: property-testing.html
   - title: Using the Plugin
-    url: plugin.html
+    url: using-the-plugin.html
   - title: Asserting with Pyro
     url: asserting-with-pyro.html
   - title: Integrating your Integration Testing with Whales
