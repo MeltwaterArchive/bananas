@@ -98,7 +98,7 @@ class BananasRunner extends Runner {
         }
         val labels = r.labels.toList.mkString(" ")
         val error = r.result match {
-          case Left(e)            => Some(indent(e.getStackTrace.toList.map(_.toString), "* ", "", "\n"))
+          case Left(e)            => Some(indent((e.getMessage :: e.getStackTrace.toList).map(_.toString), "* ", "", "\n"))
           case Right(Valid(_))    => None
           case Right(Invalid(is)) => Some(indent(is.toList, "* ", "", "\n"))
         }
