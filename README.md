@@ -33,7 +33,7 @@ A step by step series of examples that tell you how to get a development env run
 
 ### Example
 
-```tut:silent:nofail
+```scala
 import cats._, cats.implicits._, cats.data._
 import cats.effect._
 import com.meltwater.bananas.core.{NestedDsl, Spec, Tests}
